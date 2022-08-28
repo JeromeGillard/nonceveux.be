@@ -15,7 +15,7 @@ services:
       - /etc/localtime:/etc/localtime
     ports:
       - 1580:80       # HTTP, custom external ports because already behind another Treafik instance.
-      - 157443:443     # TLS
+      - 15443:443     # TLS
     networks:
       - nonceveux_be
       - cluster_net # external 
