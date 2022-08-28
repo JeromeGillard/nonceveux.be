@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   # The reverse proxy  
-  traefik:
+  n_traefik:
     image: traefik
     restart: always
     env_file: 
@@ -14,11 +14,11 @@ services:
       - ${CLUSTER_HOME}/traefik/conf:/conf
       - /etc/localtime:/etc/localtime
     ports:
-      - 780:80       # HTTP
+      - 780:80       # HTTP, custom external ports because already behind another Treafik instance.
       - 7443:443     # TLS
     networks:
       - nonceveux_be
-      - cluster_net
+      - cluster_net # external 
 
 
   # The forum
@@ -104,7 +104,10 @@ services:
       - nonceveux_be
 
 networks:
+  # The stack network
   nonceveux_be:
+
+  # This stack is not directly exposed. Bridge it to another one.
   cluster_net:
     name: cluster_cluster_net
     external: true
