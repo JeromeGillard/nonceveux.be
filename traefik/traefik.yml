@@ -31,8 +31,8 @@ entryPoints:
 #          to: websecure
 #          scheme: https
 
-  websecure:
-    address: :443
+#  websecure:
+#    address: :443
 
 ################################################################
 # Traefik logs configuration
@@ -174,7 +174,7 @@ certificatesResolvers:
        storage: /letsencrypt/nonceveux.be.json
        tlschallenge: true
        # Uncomment for staging
-       #caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+       caserver: https://acme-staging-v02.api.letsencrypt.org/directory
        dnsChallenge:
          provider: ovh
          delayBeforeCheck: 120 
