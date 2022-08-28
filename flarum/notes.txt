@@ -1,6 +1,5 @@
 https://docs.flarum.org
 https://github.com/mondediefr/docker-flarum
-https://github.com/mondediefr/docker-flarum
 
 Add extension:
-docker exec -ti flarum extension require some/extension
+docker exec -ti n_flarum extension require some/extension
