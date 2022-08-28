@@ -14,12 +14,13 @@ services:
       - ${CLUSTER_HOME}/traefik/letsencrypt:/letsencrypt
       - ${CLUSTER_HOME}/traefik/conf:/conf
       - /etc/localtime:/etc/localtime
-    ports:
-      - 1580:80       # HTTP, custom external ports because already behind another Treafik instance.
-      - 15443:443     # TLS
+    # external ports disabled because already behind another Treafik instance.
+    #ports:
+      #- 80:80       # HTTP
+      #- 443:443     # TLS
     networks:
       - nonceveux_be
-      - cluster_net # external 
+      - cluster_net # external bridge
 
 
   # The forum

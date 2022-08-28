@@ -5,7 +5,7 @@ http:
       tls:
         certresolver: myresolver
         domains:
-          - main: "nonceveux.be"
+          - main: "www.nonceveux.be"
           - sans: "*.nonceveux.be"
       entryPoints:
         - websecure
