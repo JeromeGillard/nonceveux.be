@@ -1,7 +1,7 @@
 http:
   routers:
     phpmyadmin-route:
-      rule: "Host(`phpmyadmin.nonceveux.be`) && (ClientIP(`192.168.1.0/24`) || ClientIP(`2a02:578:852e:1500::/56`))"
+      rule: "Host(`phpmyadmin.nonceveux.be`)"
       tls:
         certresolver: myresolver
         domains:
