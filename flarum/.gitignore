@@ -1,0 +1,9 @@
+.env.local
+extensions/.cache/
+!extensions/.cache/empty
+vendor/
+assets/files/
+storage/logs
+!storage/logs/empty
+vendor/
+!vendor/empty

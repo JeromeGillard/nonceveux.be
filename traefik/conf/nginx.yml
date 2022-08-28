@@ -1,0 +1,18 @@
+http:
+  routers:
+    nginx-nonceveux-route:
+      rule: "Host(`static.nonceveux.be`)"
+      tls:
+        certresolver: myresolver
+        domains:
+          - main: "nonceveux.be"
+          - sans: "*.nonceveux.be"
+      entryPoints:
+        - websecure
+      service: nginx-nonceveux-srv
+
+  services:
+    nginx-nonceveux-srv:
+      loadBalancer:
+        servers:
+          - url: "http://n_nginx:80"

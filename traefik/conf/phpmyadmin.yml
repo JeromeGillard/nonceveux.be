@@ -1,0 +1,18 @@
+http:
+  routers:
+    phpmyadmin-route:
+      rule: "Host(`phpmyadmin.nonceveux.be`) && (ClientIP(`192.168.1.0/24`) || ClientIP(`2a02:578:852e:1500::/56`))"
+      tls:
+        certresolver: myresolver
+        domains:
+          - main: "phpmyadmin.nonceveux.be"
+          - sans: "*.nonceveux.be"
+      entryPoints:
+        - websecure
+      service: phpmyadmin-srv
+  
+  services:
+    phpmyadmin-srv:
+      loadBalancer:
+        servers:
+          - url: "http://n_phpmyadmin:80"

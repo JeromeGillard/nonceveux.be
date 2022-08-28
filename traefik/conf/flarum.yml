@@ -1,0 +1,18 @@
+http:
+  routers:
+    flarum-route:
+      rule: "Host(`nonceveux.be`) || Host(`www.nonceveux.be`)"
+      tls:
+        certresolver: myresolver
+        domains:
+          - main: "nonceveux.be"
+          - sans: "*.nonceveux.be"
+      entryPoints:
+        - websecure
+      service: flarum-srv
+  
+  services:
+    flarum-srv:
+      loadBalancer:
+        servers:
+          - url: "http://n_flarum:8888"

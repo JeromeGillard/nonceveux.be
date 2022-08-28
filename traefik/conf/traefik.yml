@@ -1,0 +1,18 @@
+http:
+  routers:
+    traefik-route:
+      rule: Host(`traefik.nonceveux.be`)
+      tls:
+        certresolver: myresolver
+        domains:
+          - main: "traefik.nonceveux.be"
+          - sans: "*.nonceveux.be"
+      entryPoints:
+        - websecure
+      service: traefik-srv
+
+  services:
+    traefik-srv:
+      loadBalancer:
+        servers:
+          - url: "http://n_traefik:8080"
