@@ -1,20 +1,18 @@
 # nonceveux.be
 Sources of the nonceveux.be platform.
 
-## Traefik
-Reverse proxy used to direct HTTP requests to the right container.
+## Flarum
+Main forum application.  
+https://flarum.org/
 
-## n_flarum
-Main forum application.
-
-## n_db
+## MariaDB
 Database engine, needed for Flarum
 
-## n_db-backup
+## MariaDB-backup
 Automatic backup of the database as a simple dump command.
 
-## n_phpmyadmin
+## phpmyAdmin
 WebUI of the database. Handy for restoring a backup by point & click.
 
-## n_nginx
+## nginx
 Static HTML files can be routed there for direct access. By default, all is routed to Flarum.
