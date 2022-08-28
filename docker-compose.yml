@@ -14,8 +14,8 @@ services:
       - ${CLUSTER_HOME}/traefik/conf:/conf
       - /etc/localtime:/etc/localtime
     ports:
-      - 780:80       # HTTP, custom external ports because already behind another Treafik instance.
-      - 7443:443     # TLS
+      - 1580:80       # HTTP, custom external ports because already behind another Treafik instance.
+      - 157443:443     # TLS
     networks:
       - nonceveux_be
       - cluster_net # external 
@@ -106,6 +106,7 @@ services:
 networks:
   # The stack network
   nonceveux_be:
+    name: nonceveux_be
 
   # This stack is not directly exposed. Bridge it to another one.
   cluster_net:
