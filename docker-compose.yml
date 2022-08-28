@@ -4,6 +4,7 @@ services:
   # The reverse proxy  
   n_traefik:
     image: traefik
+    container_name: n_traefik
     restart: always
     env_file: 
       - ${CLUSTER_HOME}/traefik/.env
