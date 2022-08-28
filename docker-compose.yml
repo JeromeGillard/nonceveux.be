@@ -1,27 +1,6 @@
 version: "3.9"
 
 services:
-  # The reverse proxy  
-  n_traefik:
-    image: traefik
-    container_name: n_traefik
-    restart: always
-    env_file: 
-      - ${CLUSTER_HOME}/traefik/.env
-      - ${CLUSTER_HOME}/traefik/.env.local
-    volumes:
-      - ${CLUSTER_HOME}/traefik/traefik.yml:/etc/traefik/traefik.yml
-      - ${CLUSTER_HOME}/traefik/letsencrypt:/letsencrypt
-      - ${CLUSTER_HOME}/traefik/conf:/conf
-      - /etc/localtime:/etc/localtime
-    # external ports disabled because already behind another Treafik instance.
-    #ports:
-      #- 80:80       # HTTP
-      #- 443:443     # TLS
-    networks:
-      - nonceveux_be
-      - cluster_net # external bridge
-
 
   # The forum
   n_flarum:
@@ -40,6 +19,7 @@ services:
       - n_db
     networks:
       - nonceveux_be
+      - cluster_net # external bridge
 
   # The database
   n_db:
@@ -92,6 +72,7 @@ services:
       - n_db
     networks:
       - nonceveux_be
+      - cluster_net # external bridge
 
   n_nginx:
     image: nginx
@@ -104,6 +85,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - nonceveux_be
+      - cluster_net # external bridge
 
 networks:
   # The stack network
