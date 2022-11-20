@@ -4,7 +4,7 @@ services:
 
   # The forum
   n_flarum:
-    image: mondedie/flarum:stable
+    image: jeromegillard/flarum:latest
     container_name: n_flarum
     restart: always
     env_file:
