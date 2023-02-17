@@ -3,8 +3,6 @@ services:
   # The forum
   n_flarum:
     image: jeromegillard/flarum:latest
-    container_name: n_flarum
-    restart: always
     env_file:
       - ${CLUSTER_HOME}/flarum/.env
       - ${CLUSTER_HOME}/flarum/.env.local
@@ -22,8 +20,6 @@ services:
   # The database
   n_db:
     image: linuxserver/mariadb
-    container_name: n_db
-    restart: always
     env_file:
       - ${CLUSTER_HOME}/mariadb/.env
       - ${CLUSTER_HOME}/mariadb/.env.local
@@ -43,7 +39,6 @@ services:
   # An optional DB interface
   n_phpmyadmin:
     image: phpmyadmin
-    container_name: n_phpmyadmin
     env_file:
       - ${CLUSTER_HOME}/mariadb/.env
       - ${CLUSTER_HOME}/mariadb/.env.local
@@ -56,8 +51,6 @@ services:
 
   n_nginx:
     image: nginx
-    restart: always
-    container_name: n_nginx
     volumes:
       - ${CLUSTER_HOME}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ${CLUSTER_HOME}/nginx/conf.d/nonceveux.be.conf:/etc/nginx/conf.d/nonceveux.be.conf:ro
