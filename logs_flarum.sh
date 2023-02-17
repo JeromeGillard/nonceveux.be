@@ -1,2 +1,2 @@
 #!/bin/bash
-docker service logs -f n_flarum
+docker service logs -f nonceveux_n_flarum

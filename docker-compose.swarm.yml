@@ -21,7 +21,7 @@ services:
 
   # The database
   n_db:
-    image: lscr.io/linuxserver/mariadb:10.5
+    image: linuxserver/mariadb
     container_name: n_db
     restart: always
     env_file:
