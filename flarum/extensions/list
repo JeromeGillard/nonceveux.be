@@ -1,5 +1,11 @@
 flarum-lang/french
 fof/analytics:*
+fof/formatting:*
+fof/links
+fof/pages
 fof/sitemap:*
 fof/upload:*
+jeromegillard/map
+jeromegillard/map:*
 v17development/flarum-seo
+webbinaro/gpx-preview
