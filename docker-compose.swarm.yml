@@ -35,8 +35,7 @@ services:
 
   # The DB backup
   mariadb-backup:
-    build: .
-    restart: unless-stopped
+    image: jeromegillard/mariadb-backup
     env_file:
       - ${CLUSTER_HOME}/mariadb/.env
       - ${CLUSTER_HOME}/mariadb/.env.local
