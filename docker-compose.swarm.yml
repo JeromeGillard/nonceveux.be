@@ -34,7 +34,7 @@ services:
           - 'node.labels.hn == p6'
 
   # The DB backup
-  mariadb-backup:
+  db_backup:
     image: jeromegillard/mariadb-backup
     env_file:
       - ${CLUSTER_HOME}/mariadb/.env
@@ -45,7 +45,7 @@ services:
     depends_on:
       - mariadb
     networks:
-      - cluster_net
+      - nonceveux_be
 
 
   # An optional DB interface
