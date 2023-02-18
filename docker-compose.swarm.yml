@@ -34,7 +34,7 @@ services:
           - 'node.labels.hn == p6'
 
   # The DB backup
-   mariadb-backup:
+  mariadb-backup:
     build: .
     restart: unless-stopped
     env_file:
