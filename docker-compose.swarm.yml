@@ -34,7 +34,20 @@ services:
           - 'node.labels.hn == p6'
 
   # The DB backup
-  # TODO
+   mariadb-backup:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - ${CLUSTER_HOME}/mariadb/.env
+      - ${CLUSTER_HOME}/mariadb/.env.local
+    volumes:
+      - ${CLUSTER_HOME}/mariadb/database-dump:/dump
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - mariadb
+    networks:
+      - cluster_net
+
 
   # An optional DB interface
   n_phpmyadmin:
