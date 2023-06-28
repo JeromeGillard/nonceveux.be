@@ -1,7 +1,8 @@
+
 services:
 
   # The forum
-  n_flarum:
+  flarum:
     image: jeromegillard/flarum:latest
     env_file:
       - ${CLUSTER_HOME}/flarum/.env
@@ -12,13 +13,13 @@ services:
       - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
       - ${CLUSTER_HOME}/flarum/vendor:/flarum/app/vendor    
     depends_on:
-      - n_db
+      - db
     networks:
       - nonceveux_be
       - cluster_net # external bridge
 
   # The database
-  n_db:
+  db:
     image: linuxserver/mariadb
     env_file:
       - ${CLUSTER_HOME}/mariadb/.env
@@ -34,21 +35,33 @@ services:
           - 'node.labels.hn == p6'
 
   # The DB backup
-  # TODO
+  db_backup:
+    image: jeromegillard/mariadb-backup
+    env_file:
+      - ${CLUSTER_HOME}/mariadb/.env
+      - ${CLUSTER_HOME}/mariadb/.env.local
+    volumes:
+      - ${CLUSTER_HOME}/mariadb/database-dump:/dump
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - db
+    networks:
+      - nonceveux_be
+
 
   # An optional DB interface
-  n_phpmyadmin:
+  phpmyadmin:
     image: phpmyadmin
     env_file:
       - ${CLUSTER_HOME}/mariadb/.env
       - ${CLUSTER_HOME}/mariadb/.env.local
     depends_on:
-      - n_db
+      - db
     networks:
       - nonceveux_be
       - cluster_net # external bridge
 
-  n_nginx:
+  nginx:
     image: nginx
     volumes:
       - ${CLUSTER_HOME}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
