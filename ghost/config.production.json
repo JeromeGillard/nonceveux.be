@@ -1,0 +1,27 @@
+{
+  "url": "https://blog.nonceveux.be",
+    "server": {
+        "port": 2368,
+        "host": "0.0.0.0"
+    },
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "content/data/ghost-test.db"
+    },
+    "useNullAsDefault": true,
+    "debug": false
+  },
+  "mail": {
+    "transport": "SMTP",
+    "from": "info@nonceveux.be",
+    "options": {
+      "host": "ssl0.ovh.net",
+      "port": "465",
+      "secure": "true",
+      "auth": {
+        "user": "info@nonceveux.be"
+      }
+    }
+  }  
+}
