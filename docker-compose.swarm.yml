@@ -8,10 +8,8 @@ services:
       - ${CLUSTER_HOME}/flarum/.env
       - ${CLUSTER_HOME}/flarum/.env.local
     volumes:
-      - ${CLUSTER_HOME}/flarum/assets:/flarum/app/public/assets
-      - ${CLUSTER_HOME}/flarum/extensions:/flarum/app/extensions
+      - flarum-app:/flarum/app
       - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
-      - ${CLUSTER_HOME}/flarum/vendor:/flarum/app/vendor    
     depends_on:
       - db
     networks:
@@ -32,7 +30,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - 'node.labels.hn == p6'
+          - 'node.labels.hn == K5'
 
   # The DB backup
   db_backup:
@@ -71,6 +69,19 @@ services:
     networks:
       - nonceveux_be
       - cluster_net # external bridge
+  
+  ghost:
+    image: ghost 
+    env_file:
+      - ${CLUSTER_HOME}/ghost/.env
+      - ${CLUSTER_HOME}/ghost/.env.local
+    volumes:
+      - ghost-data:/var/lib/ghost/current/content      
+      - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/current/content/themes/casper
+      - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
+    networks:
+      - nonceveux_be
+      - cluster_net
 
 networks:
   # The stack network
@@ -81,3 +92,20 @@ networks:
   cluster_net:
     name: h3_cluster_net
     external: true
+
+volumes:
+
+  
+  flarum-app:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/flarum"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+
+  ghost-data:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/ghost/data"
+      password: ${SSHFS_PASS}
+      allow_other: ""
