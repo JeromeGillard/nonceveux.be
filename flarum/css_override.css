@@ -1,9 +1,9 @@
 .DiscussionListItem-info .item-excerpt div{font-size:14px;}
 .Dropdown-menu > li > a, .Dropdown-menu > li > button, .Dropdown-menu > li > span{font-size:15px;}
 div.Post-body, div .TextEditor .TextEditor-editor{font-size:16px;}
-h3.DiscussionListItem-title{font-size:18px;}
+.DiscussionListItem-main .DiscussionListItem-title{font-size:18px;}
 
 .Pages-container.container{max-width: 1300px}
 .Post-body .mapFile-container div[id*="map-1-vtt-trail-center-de-l-ambleve0"]{height: 50em;}
 .Pages-page .mapFile-container .ButtonGroup{display: none;}
-.DiscussionListItem--unapproved{display:none;}
+.DiscussionListItem--unapproved{display:none;}  
