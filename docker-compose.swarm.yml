@@ -107,5 +107,5 @@ volumes:
     driver: "vieux/sshfs:next"
     driver_opts:
       sshcmd: "${N_VOL_SSHCMD}/ghost/data"
-      password: ${SSHFS_PASS}
+      password: ${N_SSHFS_PASS}
       allow_other: ""
