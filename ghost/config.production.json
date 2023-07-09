@@ -7,10 +7,10 @@
   "database": {
     "client": "sqlite3",
     "connection": {
-      "filename": "content/data/ghost.db"
+      "filename": "content/ghost.db"
     },
     "useNullAsDefault": true,
-    "debug": true
+    "debug": false
   },
   "mail": {
     "transport": "SMTP",
