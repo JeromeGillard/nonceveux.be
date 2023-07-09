@@ -94,7 +94,7 @@ services:
       - ${CLUSTER_HOME}/ghost/.env
       - ${CLUSTER_HOME}/ghost/.env.local
     volumes:
-      - ghost-data:/var/lib/ghost/content 
+      - ghost-data:/var/lib/ghost/current/content 
       - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost//content/themes/casper
       - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
     networks:
