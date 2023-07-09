@@ -65,36 +65,37 @@ services:
   #     - nonceveux_be
   #     - cluster_net # external bridge
 
-  # nginx:
-  #   image: nginx
-  #   volumes:
-  #     - ${CLUSTER_HOME}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  #     - ${CLUSTER_HOME}/nginx/conf.d/nonceveux.be.conf:/etc/nginx/conf.d/nonceveux.be.conf:ro
-  #     - ${CLUSTER_HOME}/nginx/html:/var/www/html:ro
-  #     - /etc/localtime:/etc/localtime:ro
-  #   networks:
-  #     - nonceveux_be
-  #     - cluster_net # external bridge
-  
-  ghost:
-    image: ghost 
-    env_file:
-      - ${CLUSTER_HOME}/ghost/.env
-      - ${CLUSTER_HOME}/ghost/.env.local
+  nginx:
+    image: nginx
     volumes:
-      - ghost-data:/var/lib/ghost/current/content      
-      - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/current/content/themes/casper
-      - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
+      - ${CLUSTER_HOME}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ${CLUSTER_HOME}/nginx/conf.d/nonceveux.be.conf:/etc/nginx/conf.d/nonceveux.be.conf:ro
+      - ${CLUSTER_HOME}/nginx/html:/var/www/html:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ghost-data:/tmp/ghost
     networks:
       - nonceveux_be
-      - cluster_net
-    deploy:
-      replicas: 1
-      placement:
-          constraints:
-           - node.hostname==K5
-          preferences:
-            - spread: node.labels.beef
+      - cluster_net # external bridge
+  
+  # ghost:
+  #   image: ghost 
+  #   env_file:
+  #     - ${CLUSTER_HOME}/ghost/.env
+  #     - ${CLUSTER_HOME}/ghost/.env.local
+  #   volumes:
+  #     - ghost-data:/var/lib/ghost/current/content2      
+  #     - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/current/content/themes/casper
+  #     - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
+  #   networks:
+  #     - nonceveux_be
+  #     - cluster_net
+  #   deploy:
+  #     replicas: 1
+  #     placement:
+  #         constraints:
+  #          - node.hostname==K5
+  #         preferences:
+  #           - spread: node.labels.beef
 
 networks:
   # The stack network
