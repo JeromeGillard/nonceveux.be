@@ -2,68 +2,80 @@
 services:
 
   # The forum
-  # flarum:
-  #   image: jeromegillard/flarum:latest
-  #   env_file:
-  #     - ${CLUSTER_HOME}/flarum/.env
-  #     - ${CLUSTER_HOME}/flarum/.env.local
-  #   volumes:
-  #     - flarum-app:/flarum/app
-  #     - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - nonceveux_be
-  #     - cluster_net # external bridge
-  #   deploy:
-  #     replicas: 1
-  #     placement:
-  #       preferences:
-  #         - spread: node.labels.beef
+  flarum:
+    image: jeromegillard/flarum:latest
+    env_file:
+      - ${CLUSTER_HOME}/flarum/.env
+      - ${CLUSTER_HOME}/flarum/.env.local
+    volumes:
+      - flarum-app:/flarum/app
+      - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
+    depends_on:
+      - db
+    networks:
+      - nonceveux_be
+      - cluster_net # external bridge
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname==K5
+        preferences:
+          - spread: node.labels.beef
 
-  # # The database
-  # db:
-  #   image: mariadb:10.5
-  #   env_file:
-  #     - ${CLUSTER_HOME}/mariadb/.env
-  #     - ${CLUSTER_HOME}/mariadb/.env.local
-  #   volumes:
-  #     - ${CLUSTER_HOME}/mariadb/data:/var/lib/mysql
-  #   networks:
-  #     - nonceveux_be
-  #   deploy:
-  #     replicas: 1
-  #     placement:
-  #       constraints:
-  #         - node.hostname==K5
+  # The database
+  db:
+    image: mariadb:10.5
+    env_file:
+      - ${CLUSTER_HOME}/mariadb/.env
+      - ${CLUSTER_HOME}/mariadb/.env.local
+    volumes:
+      - ${CLUSTER_HOME}/mariadb/data:/var/lib/mysql
+    networks:
+      - nonceveux_be
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname==K5
 
-  # # The DB backup
-  # db_backup:
-  #   image: jeromegillard/mariadb-backup
-  #   env_file:
-  #     - ${CLUSTER_HOME}/mariadb/.env
-  #     - ${CLUSTER_HOME}/mariadb/.env.local
-  #   volumes:
-  #     - ${CLUSTER_HOME}/mariadb/database-dump:/dump
-  #     - /etc/localtime:/etc/localtime:ro
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - nonceveux_be
+  # The DB backup
+  db_backup:
+    image: jeromegillard/mariadb-backup
+    env_file:
+      - ${CLUSTER_HOME}/mariadb/.env
+      - ${CLUSTER_HOME}/mariadb/.env.local
+    volumes:
+      - ${CLUSTER_HOME}/mariadb/database-dump:/dump
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - db
+    networks:
+      - nonceveux_be
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname==K5
       
 
 
-  # # An optional DB interface
-  # phpmyadmin:
-  #   image: phpmyadmin
-  #   env_file:
-  #     - ${CLUSTER_HOME}/mariadb/.env
-  #     - ${CLUSTER_HOME}/mariadb/.env.local
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - nonceveux_be
-  #     - cluster_net # external bridge
+  # An optional DB interface
+  phpmyadmin:
+    image: phpmyadmin
+    env_file:
+      - ${CLUSTER_HOME}/mariadb/.env
+      - ${CLUSTER_HOME}/mariadb/.env.local
+    depends_on:
+      - db
+    networks:
+      - nonceveux_be
+      - cluster_net # external bridge
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname==K5
 
   nginx:
     image: nginx
@@ -72,7 +84,6 @@ services:
       - ${CLUSTER_HOME}/nginx/conf.d/nonceveux.be.conf:/etc/nginx/conf.d/nonceveux.be.conf:ro
       - ${CLUSTER_HOME}/nginx/html:/var/www/html:ro
       - /etc/localtime:/etc/localtime:ro
-      - ghost-data:/var/lib/ghost/current/content
     networks:
       - nonceveux_be
       - cluster_net # external bridge
