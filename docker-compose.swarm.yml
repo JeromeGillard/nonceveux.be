@@ -73,6 +73,7 @@ services:
       - ${CLUSTER_HOME}/nginx/html:/var/www/html:ro
       - /etc/localtime:/etc/localtime:ro
       - ghost-data:/tmp/ghost
+      - ${CLUSTER_HOME}/ghost:/tmp/ghost2
     networks:
       - nonceveux_be
       - cluster_net # external bridge
