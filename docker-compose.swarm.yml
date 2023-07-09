@@ -91,8 +91,10 @@ services:
     deploy:
       replicas: 1
       placement:
-        preferences:
-          - spread: node.labels.beef
+          constraints:
+           - node.hostname==K5
+          preferences:
+            - spread: node.labels.beef
 
 networks:
   # The stack network
