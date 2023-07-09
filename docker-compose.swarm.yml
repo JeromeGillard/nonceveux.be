@@ -73,31 +73,27 @@ services:
       - ${CLUSTER_HOME}/nginx/html:/var/www/html:ro
       - /etc/localtime:/etc/localtime:ro
       - ghost-data:/var/lib/ghost/current/content
-      - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/current/content/themes/casper
-      - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
     networks:
       - nonceveux_be
       - cluster_net # external bridge
   
-  # ghost:
-  #   image: ghost 
-  #   env_file:
-  #     - ${CLUSTER_HOME}/ghost/.env
-  #     - ${CLUSTER_HOME}/ghost/.env.local
-  #   volumes:
-  #     - ghost-data:/var/lib/ghost/current/content 
-  #     - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/current/content/themes/casper
-  #     - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
-  #   networks:
-  #     - nonceveux_be
-  #     - cluster_net
-  #   deploy:
-  #     replicas: 1
-  #     placement:
-  #         constraints:
-  #          - node.hostname==K5
-  #         preferences:
-  #           - spread: node.labels.beef
+  ghost:
+    image: ghost 
+    env_file:
+      - ${CLUSTER_HOME}/ghost/.env
+      - ${CLUSTER_HOME}/ghost/.env.local
+    volumes:
+      - ghost-data:/var/lib/ghost/current/content 
+    networks:
+      - nonceveux_be
+      - cluster_net
+    deploy:
+      replicas: 1
+      placement:
+          constraints:
+           - node.hostname==K5
+          preferences:
+            - spread: node.labels.beef
 
 networks:
   # The stack network
