@@ -72,8 +72,9 @@ services:
       - ${CLUSTER_HOME}/nginx/conf.d/nonceveux.be.conf:/etc/nginx/conf.d/nonceveux.be.conf:ro
       - ${CLUSTER_HOME}/nginx/html:/var/www/html:ro
       - /etc/localtime:/etc/localtime:ro
-      - ghost-data:/tmp/ghost
-      - ${CLUSTER_HOME}/ghost:/tmp/ghost2
+      - ghost-data:/var/lib/ghost/current/content
+      - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/current/content/themes/casper
+      - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
     networks:
       - nonceveux_be
       - cluster_net # external bridge
@@ -84,7 +85,7 @@ services:
   #     - ${CLUSTER_HOME}/ghost/.env
   #     - ${CLUSTER_HOME}/ghost/.env.local
   #   volumes:
-  #     - ghost-data:/var/lib/ghost/current/content2      
+  #     - ghost-data:/var/lib/ghost/current/content 
   #     - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/current/content/themes/casper
   #     - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
   #   networks:
