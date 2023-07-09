@@ -7,7 +7,7 @@
   "database": {
     "client": "sqlite3",
     "connection": {
-      "filename": "/var/lib/ghost/content/ghost.db"
+      "filename": "/var/lib/ghost/content/data/ghost.db"
     },
     "useNullAsDefault": true,
     "debug": false
