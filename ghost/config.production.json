@@ -12,6 +12,9 @@
     "useNullAsDefault": true,
     "debug": false
   },
+  "paths": {
+    "contentPath": "content/"
+  },
   "mail": {
     "transport": "SMTP",
     "from": "info@nonceveux.be",
