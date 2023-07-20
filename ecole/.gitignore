@@ -1,0 +1,8 @@
+.env.local
+data/
+files/
+images/
+logs/
+media/
+public/
+ghost.db

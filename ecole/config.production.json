@@ -1,0 +1,30 @@
+{
+  "url": "https://ecole.nonceveux.be",
+    "server": {
+        "port": 2368,
+        "host": "0.0.0.0"
+    },
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "/var/lib/ghost/content/data/ghost.db"
+    },
+    "useNullAsDefault": true,
+    "debug": false
+  },
+  "paths": {
+    "contentPath": "/var/lib/ghost/content/"
+  },
+  "mail": {
+    "transport": "SMTP",
+    "from": "webmaster.ecole@nonceveux.be",
+    "options": {
+      "host": "ssl0.ovh.net",
+      "port": "465",
+      "secure": "true",
+      "auth": {
+        "user": "info@nonceveux.be"
+      }
+    }
+  }  
+}
