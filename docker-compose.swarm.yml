@@ -16,7 +16,7 @@ services:
       - nonceveux_be
       - cluster_net # external bridge
     deploy:
-      replicas: 1
+      replicas: 0
       placement:
         constraints:
           - node.hostname==K5
@@ -34,7 +34,7 @@ services:
     networks:
       - nonceveux_be
     deploy:
-      replicas: 1
+      replicas: 0
       placement:
         constraints:
           - node.hostname==K5
@@ -53,7 +53,7 @@ services:
     networks:
       - nonceveux_be
     deploy:
-      replicas: 1
+      replicas: 0
       placement:
         constraints:
           - node.hostname==K5
@@ -72,7 +72,7 @@ services:
       - nonceveux_be
       - cluster_net # external bridge
     deploy:
-      replicas: 1
+      replicas: 0
       placement:
         constraints:
           - node.hostname==K5
@@ -97,6 +97,26 @@ services:
       - ghost-data:/var/lib/ghost/content 
       - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/content/themes/casper
       - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
+    networks:
+      - nonceveux_be
+      - cluster_net
+    deploy:
+      replicas: 0
+      placement:
+          constraints:
+           - node.hostname==K5
+          preferences:
+            - spread: node.labels.beef
+
+  ecole_nonceveux_be:
+    image: ghost 
+    env_file:
+      - ${CLUSTER_HOME}/ecole/.env
+      - ${CLUSTER_HOME}/ecole/.env.local
+    volumes:
+      - ecole-data:/var/lib/ghost/content 
+      #- ${CLUSTER_HOME}/ecole/themes/casper:/var/lib/ghost/content/themes/casper
+      - ${CLUSTER_HOME}/ecole/config.production.json:/var/lib/ghost/config.production.json
     networks:
       - nonceveux_be
       - cluster_net
