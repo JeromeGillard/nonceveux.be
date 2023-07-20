@@ -108,7 +108,7 @@ services:
           preferences:
             - spread: node.labels.beef
 
-  ecole_nonceveux_be:
+  ecole_ghost:
     image: ghost 
     env_file:
       - ${CLUSTER_HOME}/ecole/.env
