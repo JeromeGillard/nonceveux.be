@@ -114,7 +114,7 @@ services:
       - ${CLUSTER_HOME}/ecole/.env
       - ${CLUSTER_HOME}/ecole/.env.local
     volumes:
-      - ecole-data:/var/lib/ghost/content 
+      - ecole-ghost-data:/var/lib/ghost/content 
       #- ${CLUSTER_HOME}/ecole/themes/casper:/var/lib/ghost/content/themes/casper
       - ${CLUSTER_HOME}/ecole/config.production.json:/var/lib/ghost/config.production.json
     networks:
@@ -152,5 +152,12 @@ volumes:
     driver: "vieux/sshfs:next"
     driver_opts:
       sshcmd: "${N_VOL_SSHCMD}/ghost"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+
+  ecole-ghost-data:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/ecole"
       password: ${N_SSHFS_PASS}
       allow_other: ""
