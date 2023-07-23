@@ -1,2 +1,2 @@
 #!/bin/bash
-docker service logs -f nonceveux_ghost
+docker service logs -f nonceveux_ecole_ghost
