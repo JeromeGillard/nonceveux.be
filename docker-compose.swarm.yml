@@ -115,7 +115,6 @@ services:
       - ${CLUSTER_HOME}/ecole/.env.local
     volumes:
       - ecole-ghost-data:/var/lib/ghost/content 
-      #- ${CLUSTER_HOME}/ecole/themes/casper:/var/lib/ghost/content/themes/casper
       - ${CLUSTER_HOME}/ecole/config.production.json:/var/lib/ghost/config.production.json
     networks:
       - nonceveux_be
@@ -124,9 +123,9 @@ services:
       replicas: 1
       placement:
           constraints:
-           - node.hostname==K5
-          preferences:
-            - spread: node.labels.beef
+           - node.hostname==P7
+          #preferences:
+          #  - spread: node.labels.beef
 
 networks:
   # The stack network
