@@ -466,6 +466,6 @@ h6 {
     font-size: 1.8rem;
 }
 
-.article-byline {
+.article .article-byline {
     display: none;
 }
