@@ -1,5 +1,5 @@
 {
-  "url": "https://blog.nonceveux.be",
+  "url": "https://ecole.nonceveux.be",
     "server": {
         "port": 2368,
         "host": "0.0.0.0"
@@ -17,7 +17,7 @@
   },
   "mail": {
     "transport": "SMTP",
-    "from": "info@nonceveux.be",
+    "from": "webmaster.ecole@nonceveux.be",
     "options": {
       "host": "ssl0.ovh.net",
       "port": "465",

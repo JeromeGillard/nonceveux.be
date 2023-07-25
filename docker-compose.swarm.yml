@@ -8,19 +8,26 @@ services:
       - ${CLUSTER_HOME}/flarum/.env
       - ${CLUSTER_HOME}/flarum/.env.local
     volumes:
-      - ${CLUSTER_HOME}/flarum/assets:/flarum/app/public/assets
-      - ${CLUSTER_HOME}/flarum/extensions:/flarum/app/extensions
+      - flarum-assets:/flarum/app/public/assets
+      - flarum-extensions:/flarum/app/public/extensions
+      - flarum-vendor:/flarum/app/vendor
       - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
-      - ${CLUSTER_HOME}/flarum/vendor:/flarum/app/vendor    
     depends_on:
       - db
     networks:
       - nonceveux_be
       - cluster_net # external bridge
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname==K5
+        preferences:
+          - spread: node.labels.beef
 
   # The database
   db:
-    image: linuxserver/mariadb
+    image: mariadb:10.5
     env_file:
       - ${CLUSTER_HOME}/mariadb/.env
       - ${CLUSTER_HOME}/mariadb/.env.local
@@ -32,7 +39,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - 'node.labels.hn == p6'
+          - node.hostname==K5
 
   # The DB backup
   db_backup:
@@ -47,6 +54,12 @@ services:
       - db
     networks:
       - nonceveux_be
+    deploy:
+      replicas: 0
+      placement:
+        constraints:
+          - node.hostname==K5
+      
 
 
   # An optional DB interface
@@ -60,6 +73,11 @@ services:
     networks:
       - nonceveux_be
       - cluster_net # external bridge
+    deploy:
+      replicas: 0
+      placement:
+        constraints:
+          - node.hostname==K5
 
   nginx:
     image: nginx
@@ -71,6 +89,45 @@ services:
     networks:
       - nonceveux_be
       - cluster_net # external bridge
+  
+  ghost:
+    image: ghost 
+    env_file:
+      - ${CLUSTER_HOME}/ghost/.env
+      - ${CLUSTER_HOME}/ghost/.env.local
+    volumes:
+      - ghost-data:/var/lib/ghost/content 
+      - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/content/themes/casper
+      - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
+    networks:
+      - nonceveux_be
+      - cluster_net
+    deploy:
+      replicas: 0
+      placement:
+          constraints:
+           - node.hostname==K5
+          preferences:
+            - spread: node.labels.beef
+
+  ecole_ghost:
+    image: ghost 
+    env_file:
+      - ${CLUSTER_HOME}/ecole/.env
+      - ${CLUSTER_HOME}/ecole/.env.local
+    volumes:
+      - ecole-ghost-data:/var/lib/ghost/content 
+      - ${CLUSTER_HOME}/ecole/config.production.json:/var/lib/ghost/config.production.json
+    networks:
+      - nonceveux_be
+      - cluster_net
+    deploy:
+      replicas: 0
+      placement:
+          constraints:
+           - node.hostname==P7
+          #preferences:
+          #  - spread: node.labels.beef
 
 networks:
   # The stack network
@@ -81,3 +138,41 @@ networks:
   cluster_net:
     name: h3_cluster_net
     external: true
+
+volumes:
+
+  
+  flarum-assets:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/flarum/assets"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+      
+  flarum-extensions:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/flarum/extensions"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+      
+  flarum-vendor:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/flarum/vendor"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+
+  ghost-data:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/ghost"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+
+  ecole-ghost-data:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/ecole"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
