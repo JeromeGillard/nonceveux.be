@@ -16,7 +16,7 @@ services:
       - nonceveux_be
       - cluster_net # external bridge
     deploy:
-      replicas: 0
+      replicas: 1
       placement:
         constraints:
           - node.hostname==K5
@@ -34,7 +34,7 @@ services:
     networks:
       - nonceveux_be
     deploy:
-      replicas: 0
+      replicas: 1
       placement:
         constraints:
           - node.hostname==K5
