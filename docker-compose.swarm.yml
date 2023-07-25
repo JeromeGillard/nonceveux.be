@@ -122,7 +122,7 @@ services:
       - nonceveux_be
       - cluster_net
     deploy:
-      replicas: 1
+      replicas: 0
       placement:
           constraints:
            - node.hostname==P7
