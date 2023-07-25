@@ -8,7 +8,9 @@ services:
       - ${CLUSTER_HOME}/flarum/.env
       - ${CLUSTER_HOME}/flarum/.env.local
     volumes:
-      - flarum-app:/flarum/app
+      - flarum-assets:/flarum/app/public/assets
+      - flarum-extensions:/flarum/app/public/extensions
+      - flarum-vendor:/flarum/app/vendor
       - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
     depends_on:
       - db
@@ -140,10 +142,24 @@ networks:
 volumes:
 
   
-  flarum-app:
+  flarum-assets:
     driver: "vieux/sshfs:next"
     driver_opts:
-      sshcmd: "${N_VOL_SSHCMD}/flarum"
+      sshcmd: "${N_VOL_SSHCMD}/flarum/assets"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+      
+  flarum-extensions:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/flarum/extensions"
+      password: ${N_SSHFS_PASS}
+      allow_other: ""
+      
+  flarum-vendor:
+    driver: "vieux/sshfs:next"
+    driver_opts:
+      sshcmd: "${N_VOL_SSHCMD}/flarum/vendor"
       password: ${N_SSHFS_PASS}
       allow_other: ""
 
