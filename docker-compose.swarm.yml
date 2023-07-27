@@ -147,21 +147,21 @@ volumes:
     driver_opts:
       type: "nfs"
       o: ${N_VOL_NFS_O}
-      allow_other: "${N_VOL_NFS_D}/flarum/assets"
+      device: "${N_VOL_NFS_D}/flarum/assets"
       
   flarum-extensions:
     driver: "local"
     driver_opts:
       type: "nfs"
       o: ${N_VOL_NFS_O}
-      allow_other: "${N_VOL_NFS_D}/flarum/extensions"
+      device: "${N_VOL_NFS_D}/flarum/extensions"
       
   flarum-vendor:
     driver: "local"
     driver_opts:
       type: "nfs"
       o: ${N_VOL_NFS_O}
-      allow_other: "${N_VOL_NFS_D}/flarum/vendor"
+      device: "${N_VOL_NFS_D}/flarum/vendor"
 
   ghost-data:
     driver: "vieux/sshfs:next"
