@@ -21,7 +21,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname==K5
+          - node.hostname==P7
         preferences:
           - spread: node.labels.beef
 
@@ -143,25 +143,25 @@ volumes:
 
   
   flarum-assets:
-    driver: "vieux/sshfs:next"
+    driver: "local"
     driver_opts:
-      sshcmd: "${N_VOL_SSHCMD}/flarum/assets"
-      password: ${N_SSHFS_PASS}
-      allow_other: ""
+      type: "nfs"
+      o: ${N_VOL_NFS_O}
+      allow_other: "${N_VOL_NFS_D}/flarum/assets"
       
   flarum-extensions:
-    driver: "vieux/sshfs:next"
+    driver: "local"
     driver_opts:
-      sshcmd: "${N_VOL_SSHCMD}/flarum/extensions"
-      password: ${N_SSHFS_PASS}
-      allow_other: ""
+      type: "nfs"
+      o: ${N_VOL_NFS_O}
+      allow_other: "${N_VOL_NFS_D}/flarum/extensions"
       
   flarum-vendor:
-    driver: "vieux/sshfs:next"
+    driver: "local"
     driver_opts:
-      sshcmd: "${N_VOL_SSHCMD}/flarum/vendor"
-      password: ${N_SSHFS_PASS}
-      allow_other: ""
+      type: "nfs"
+      o: ${N_VOL_NFS_O}
+      allow_other: "${N_VOL_NFS_D}/flarum/vendor"
 
   ghost-data:
     driver: "vieux/sshfs:next"
