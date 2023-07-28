@@ -21,7 +21,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname==K4
+          - node.hostname==K5
         preferences:
           - spread: node.labels.beef
 
@@ -57,8 +57,10 @@ services:
     deploy:
       replicas: 0
       placement:
-        constraints:
-          - node.hostname==K5
+        #constraints:
+        #  - node.hostname==K5
+        preferences:
+          - spread: node.labels.beef
       
 
 
@@ -75,9 +77,6 @@ services:
       - cluster_net # external bridge
     deploy:
       replicas: 0
-      placement:
-        constraints:
-          - node.hostname==K5
 
   nginx:
     image: nginx
@@ -105,8 +104,8 @@ services:
     deploy:
       replicas: 0
       placement:
-          constraints:
-           - node.hostname==K5
+          #constraints:
+          # - node.hostname==K5
           preferences:
             - spread: node.labels.beef
 
@@ -124,10 +123,10 @@ services:
     deploy:
       replicas: 1
       placement:
-          constraints:
-           - node.hostname==P7
-          #preferences:
-          #  - spread: node.labels.beef
+          #constraints:
+          # - node.hostname==P7
+          preferences:
+            - spread: node.labels.beef
 
 networks:
   # The stack network
