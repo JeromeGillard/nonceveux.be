@@ -122,7 +122,7 @@ services:
       - nonceveux_be
       - cluster_net
     deploy:
-      replicas: 0
+      replicas: 1
       placement:
           constraints:
            - node.hostname==P7
@@ -164,15 +164,15 @@ volumes:
       device: "${N_VOL_NFS_D}/flarum/vendor"
 
   ghost-data:
-    driver: "vieux/sshfs:next"
+    driver: "local"
     driver_opts:
-      sshcmd: "${N_VOL_SSHCMD}/ghost"
-      password: ${N_SSHFS_PASS}
-      allow_other: ""
+      type: "nfs"
+      o: ${N_VOL_NFS_O}
+      device: "${N_VOL_NFS_D}/ghost"
 
   ecole-ghost-data:
-    driver: "vieux/sshfs:next"
+    driver: "local"
     driver_opts:
-      sshcmd: "${N_VOL_SSHCMD}/ecole"
-      password: ${N_SSHFS_PASS}
-      allow_other: ""
+      type: "nfs"
+      o: ${N_VOL_NFS_O}
+      device: "${N_VOL_NFS_D}/ecole"
