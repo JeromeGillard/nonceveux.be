@@ -16,7 +16,7 @@ services:
     depends_on:
       - n_db
     networks:
-      - nonceveux_be
+      - nonceveux_be_dc
       - cluster_net # external bridge
 
   # The database
@@ -30,7 +30,7 @@ services:
     volumes:
       - ${CLUSTER_HOME}/mariadb/data:/var/lib/mysql
     networks:
-      - nonceveux_be
+      - nonceveux_be_dc
 
   # The DB backup
   n_db-backup:
@@ -56,7 +56,7 @@ services:
     depends_on:
       - n_db
     networks:
-      - nonceveux_be
+      - nonceveux_be_dc
 
   # An optional DB interface
   n_phpmyadmin:
@@ -69,7 +69,7 @@ services:
     depends_on:
       - n_db
     networks:
-      - nonceveux_be
+      - nonceveux_be_dc
       - cluster_net # external bridge
 
   n_nginx:
@@ -82,13 +82,13 @@ services:
       - ${CLUSTER_HOME}/nginx/html:/var/www/html:ro
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - nonceveux_be
+      - nonceveux_be_dc
       - cluster_net # external bridge
 
 networks:
   # The stack network
   nonceveux_be:
-    name: nonceveux_be
+    name: nonceveux_be_dc
 
   # This stack is not directly exposed. Bridge it to another one.
   cluster_net:
