@@ -124,7 +124,7 @@ services:
       replicas: 0
       placement:
           constraints:
-           - node.beef==beef
+           - node.labels.beef==beef
           #preferences:
           #  - spread: node.labels.beef
 
