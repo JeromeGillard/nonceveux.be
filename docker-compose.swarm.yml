@@ -123,10 +123,10 @@ services:
     deploy:
       replicas: 0
       placement:
-          #constraints:
-          # - node.hostname==P7
-          preferences:
-            - spread: node.labels.beef
+          constraints:
+           - node.beef
+          #preferences:
+          #  - spread: node.labels.beef
 
 networks:
   # The stack network
