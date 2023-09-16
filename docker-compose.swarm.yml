@@ -89,6 +89,14 @@ services:
       - nonceveux_be
       - cluster_net # external bridge
   
+  dynhost:
+    image: ambroisemaupate/ovh-dyndns
+    env_file:
+      - ${CLUSTER_HOME}/dynhost/.env.local
+      - ${CLUSTER_HOME}/dynhost/.env
+    networks:
+      - c
+
   ghost:
     image: ghost 
     env_file:
