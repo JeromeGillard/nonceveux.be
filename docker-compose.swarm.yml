@@ -94,8 +94,6 @@ services:
     env_file:
       - ${CLUSTER_HOME}/dynhost/.env.local
       - ${CLUSTER_HOME}/dynhost/.env
-    networks:
-      - c
 
   ghost:
     image: ghost 
