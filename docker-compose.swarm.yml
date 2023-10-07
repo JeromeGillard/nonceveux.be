@@ -9,8 +9,8 @@ services:
       - ${CLUSTER_HOME}/flarum/.env.local
     volumes:
       - ${CLUSTER_HOME}/flarum/assets:/flarum/app/public/assets
-      - ${CLUSTER_HOME}flarum/extensions:/flarum/app/extensions
-      - ${CLUSTER_HOME}flarum/vendor:/flarum/app/vendor
+      - ${CLUSTER_HOME}/flarum/extensions:/flarum/app/extensions
+      - ${CLUSTER_HOME}/flarum/vendor:/flarum/app/vendor
       - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
     depends_on:
       - db
