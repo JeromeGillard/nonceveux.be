@@ -8,9 +8,9 @@ services:
       - ${CLUSTER_HOME}/flarum/.env
       - ${CLUSTER_HOME}/flarum/.env.local
     volumes:
-      - flarum-assets:/flarum/app/public/assets
-      - flarum-extensions:/flarum/app/extensions
-      - flarum-vendor:/flarum/app/vendor
+      - ${CLUSTER_HOME}/flarum/assets:/flarum/app/public/assets
+      - ${CLUSTER_HOME}flarum/extensions:/flarum/app/extensions
+      - ${CLUSTER_HOME}flarum/vendor:/flarum/app/vendor
       - ${CLUSTER_HOME}/flarum/nginx:/etc/nginx/flarum
     depends_on:
       - db
@@ -21,9 +21,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname==K5
-        preferences:
-          - spread: node.labels.beef
+          - node.hostname==c1.h3.network
 
   # The database
   db:
@@ -39,7 +37,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname==K5
+          - node.hostname==c1.h3.network
 
   # The DB backup
   db_backup:
@@ -55,12 +53,10 @@ services:
     networks:
       - nonceveux_be
     deploy:
-      replicas: 0
-      placement:
-        #constraints:
-        #  - node.hostname==K5
-        preferences:
-          - spread: node.labels.beef
+        replicas: 1
+        placement:
+          constraints:
+            - node.hostname==c1.h3.network
       
 
 
@@ -77,6 +73,9 @@ services:
       - cluster_net # external bridge
     deploy:
       replicas: 0
+      placement:
+        constraints:
+          - node.hostname==c1.h3.network
 
   nginx:
     image: nginx
@@ -88,20 +87,19 @@ services:
     networks:
       - nonceveux_be
       - cluster_net # external bridge
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname==c1.h3.network
   
-  dynhost:
-    image: ambroisemaupate/ovh-dyndns
-    env_file:
-      - ${CLUSTER_HOME}/dynhost/.env.local
-      - ${CLUSTER_HOME}/dynhost/.env
-
   ghost:
     image: ghost 
     env_file:
       - ${CLUSTER_HOME}/ghost/.env
       - ${CLUSTER_HOME}/ghost/.env.local
     volumes:
-      - ghost-data:/var/lib/ghost/content 
+      - ${CLUSTER_HOME}/data:/var/lib/ghost/content 
       - ${CLUSTER_HOME}/ghost/themes/casper:/var/lib/ghost/content/themes/casper
       - ${CLUSTER_HOME}/ghost/config.production.json:/var/lib/ghost/config.production.json
     networks:
@@ -110,10 +108,8 @@ services:
     deploy:
       replicas: 0
       placement:
-          #constraints:
-          # - node.hostname==K5
-          preferences:
-            - spread: node.labels.beef
+        constraints:
+          - node.hostname==c1.h3.network
 
   ecole_ghost:
     image: ghost 
@@ -121,7 +117,7 @@ services:
       - ${CLUSTER_HOME}/ecole/.env
       - ${CLUSTER_HOME}/ecole/.env.local
     volumes:
-      - ecole-ghost-data:/var/lib/ghost/content 
+      - ${CLUSTER_HOME}/ecole:/var/lib/ghost/content 
       - ${CLUSTER_HOME}/ecole/config.production.json:/var/lib/ghost/config.production.json
     networks:
       - nonceveux_be
@@ -129,10 +125,8 @@ services:
     deploy:
       replicas: 0
       placement:
-          constraints:
-           - node.labels.beef==beef
-          #preferences:
-          #  - spread: node.labels.beef
+        constraints:
+          - node.hostname==c1.h3.network
 
 networks:
   # The stack network
@@ -143,41 +137,3 @@ networks:
   cluster_net:
     name: h3_cluster_net
     external: true
-
-volumes:
-
-  
-  flarum-assets:
-    driver: "local"
-    driver_opts:
-      type: "nfs"
-      o: ${N_VOL_NFS_O}
-      device: "${N_VOL_NFS_D}/flarum/assets"
-      
-  flarum-extensions:
-    driver: "local"
-    driver_opts:
-      type: "nfs"
-      o: ${N_VOL_NFS_O}
-      device: "${N_VOL_NFS_D}/flarum/extensions"
-      
-  flarum-vendor:
-    driver: "local"
-    driver_opts:
-      type: "nfs"
-      o: ${N_VOL_NFS_O}
-      device: "${N_VOL_NFS_D}/flarum/vendor"
-
-  ghost-data:
-    driver: "local"
-    driver_opts:
-      type: "nfs"
-      o: ${N_VOL_NFS_O}
-      device: "${N_VOL_NFS_D}/ghost"
-
-  ecole-ghost-data:
-    driver: "local"
-    driver_opts:
-      type: "nfs"
-      o: ${N_VOL_NFS_O}
-      device: "${N_VOL_NFS_D}/ecole"
